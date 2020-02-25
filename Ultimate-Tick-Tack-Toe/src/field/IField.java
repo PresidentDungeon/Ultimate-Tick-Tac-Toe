@@ -11,6 +11,8 @@ public interface IField {
 
     String AVAILABLE_FIELD = "-1";
     String EMPTY_FIELD = ".";
+    
+    
 
     /**
      * Clears the board
