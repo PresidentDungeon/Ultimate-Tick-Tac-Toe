@@ -36,21 +36,35 @@ public class GeneratedWindowController implements Initializable {
         int buttonWidth = 30;
         int buttonHeight = 30;
 
+        int spacingX = 0;
+        int spacingY = 0;
+
         for (int x = 0; x < IField.BoardSizeX; x++) {
+
+            spacingY = 0;
+            if (x == 3 || x == 6) {
+                spacingX += 1;
+            }
+
             for (int y = 0; y < IField.BoardSizeY; y++) {
+
+                if (y == 3 || y == 6) {
+                    spacingY += 1;
+                }
 
                 CustomButton btn = new CustomButton(x, y);
 
                 btn.setOnMouseClicked((mouseEvent)
                         -> {
                     getPosition(btn);
-                    
+
                 });
 
                 btn.setPrefSize(buttonWidth, buttonHeight);
 
-                btn.setLayoutX(initialXPosition + (buttonWidth * x));
-                btn.setLayoutY(initialYPosition + (buttonHeight * y));
+                btn.setLayoutX(initialXPosition + (buttonWidth * x) + spacingX * 20);
+                btn.setLayoutY(initialYPosition + (buttonHeight * y) + spacingY * 20);
+
                 btn.setText("x");
 
                 mainPane.getChildren().add(btn);
@@ -60,9 +74,8 @@ public class GeneratedWindowController implements Initializable {
         }
 
     }
-    
-    public void getPosition(CustomButton button)
-    {
+
+    public void getPosition(CustomButton button) {
         System.out.println(button.getX() + ", " + button.getY());
     }
 
