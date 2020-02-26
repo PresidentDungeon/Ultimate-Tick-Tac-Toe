@@ -25,6 +25,8 @@ public class GameManager {
         BotVsBot
     }
 
+    private final String FINISHED_FIELD = "-";
+    private final String UNAVAILABLE_FIELD = "*";
     private final IGameState currentState;
     private int currentPlayer = 0; //player0 == 0 && player1 == 1
     private GameMode mode = GameMode.HumanVsHuman;
@@ -133,20 +135,47 @@ public class GameManager {
     }
 
     private void updateBoard(IMove move) {
-        
         updateStatistics();
-        String playerValue = (currentPlayer == 0) ? "x" : "o";
-
-        currentState.getField().getBoard()[move.getX()][move.getY()] = playerValue;
+        currentState.getField().getBoard()[move.getX()][move.getY()] = currentPlayer + "";
     }
 
     private void updateMacroboard(IMove move) {
-        //TODO: Update the macroboard to the new state 
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        String[][] macroBoard = currentState.getField().getMacroboard();
+
+        int macroX = move.getX() % 3;
+        int macroY = move.getY() % 3;
+
+        //Set all unavailable fields that are not already full or won to available
+        for (int x = 0; x < macroBoard.length; x++) {
+            for (int y = 0; y < macroBoard.length; y++) {
+
+                if (macroBoard[x][y].equalsIgnoreCase(UNAVAILABLE_FIELD)) {
+                    macroBoard[x][y] = IField.AVAILABLE_FIELD;
+                }
+            }
+        }
+        
+        //Sets all available (besides finished boards) to unavailable 
+        //if the next move is in an available board
+        if (macroBoard[macroX][macroY].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
+
+            for (int x = 0; x < macroBoard.length; x++) {
+                for (int y = 0; y < macroBoard.length; y++) {
+
+                    if (macroBoard[x][y].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
+                        macroBoard[x][y] = UNAVAILABLE_FIELD;
+                    }
+                }
+            }
+
+            macroBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
+
+        }
+        currentState.getField().setMacroboard(macroBoard);
     }
-    
-    private void updateStatistics()
-    {
+
+    private void updateStatistics() {
         currentState.setMoveNumber(currentState.getMoveNumber() + 1);
         currentState.setRoundNumber(currentState.getRoundNumber() + 1);
     }
