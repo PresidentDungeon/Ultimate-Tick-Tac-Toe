@@ -16,23 +16,37 @@ import move.Move;
  */
 public class Field implements IField {
 
-    String AVAILABLE_FIELD = "-1";
-    String EMPTY_FIELD = ".";
+    int macroBoardSizeX = 3;
+    int macroBoardSizeY = 3;
 
-    int macroBoardSizeX = 9;
-    int macroBoardSizeY = 9;
+    int BoardSizeX = 9;
+    int BoardSizeY = 9;
 
-    String[][] macroBoard = new String[macroBoardSizeX][macroBoardSizeY];
+    String[][] macroBoard;
+    String[][] Board;
+
+    public Field() {
+
+        macroBoard = new String[macroBoardSizeX][macroBoardSizeY];
+        Board = new String[BoardSizeX][BoardSizeY];
+        clearBoard();
+
+    }
 
     @Override
     public void clearBoard() {
 
-        macroBoard = new String[macroBoardSizeX][macroBoardSizeY];
-
         for (int x = 0; x < macroBoardSizeX; x++) {
 
             for (int y = 0; y < macroBoardSizeY; y++) {
-                macroBoard[x][y] = ".";
+                macroBoard[x][y] = AVAILABLE_FIELD;
+            }
+        }
+
+        for (int x = 0; x < BoardSizeX; x++) {
+
+            for (int y = 0; y < BoardSizeY; y++) {
+                Board[x][y] = EMPTY_FIELD;
             }
         }
 
@@ -46,7 +60,7 @@ public class Field implements IField {
         for (int x = 0; x < macroBoardSizeX; x++) {
 
             for (int y = 0; y < macroBoardSizeY; y++) {
-                if (macroBoard[x][y].equalsIgnoreCase(EMPTY_FIELD)) {
+                if (macroBoard[x][y].equalsIgnoreCase(AVAILABLE_FIELD)) {
                     Move validPlacement = new Move(x, y);
                     allAvailableMoves.add(validPlacement);
                 }
@@ -57,28 +71,48 @@ public class Field implements IField {
 
     @Override
     public String getPlayerId(int column, int row) {
-        
-        return macroBoard[column][row];
+
+        return Board[column][row];
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        for (int x = 0; x < BoardSizeX; x++) {
+            for (int y = 0; y < BoardSizeY; y++) {
+                if (!Board[x][y].equalsIgnoreCase(EMPTY_FIELD)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean isFull() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        for (int x = 0; x < BoardSizeX; x++) {
+            for (int y = 0; y < BoardSizeY; y++) {
+                if (Board[x][y].equalsIgnoreCase(EMPTY_FIELD)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
     public Boolean isInActiveMicroboard(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        int miniX = x/3;
+        int miniY = y/3;
+                
+        return macroBoard[miniX][miniY].equalsIgnoreCase(AVAILABLE_FIELD);
     }
 
     @Override
     public String[][] getBoard() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Board;
     }
 
     @Override
@@ -89,7 +123,7 @@ public class Field implements IField {
 
     @Override
     public void setBoard(String[][] board) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.Board = board;
     }
 
     @Override
