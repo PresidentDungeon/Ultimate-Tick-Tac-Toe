@@ -22,8 +22,8 @@ public class Field implements IField {
     int BoardSizeX = 9;
     int BoardSizeY = 9;
 
-    String[][] macroBoard;
-    String[][] Board;
+   private String[][] macroBoard;
+   private String[][] Board;
 
     public Field() {
 
@@ -57,10 +57,9 @@ public class Field implements IField {
 
         List<IMove> allAvailableMoves = new ArrayList<>();
 
-        for (int x = 0; x < macroBoardSizeX; x++) {
-
-            for (int y = 0; y < macroBoardSizeY; y++) {
-                if (macroBoard[x][y].equalsIgnoreCase(AVAILABLE_FIELD)) {
+        for (int x = 0; x < BoardSizeX; x++) {
+            for (int y = 0; y < BoardSizeY; y++) {
+                if (Board[x][y].equalsIgnoreCase(EMPTY_FIELD) && isInActiveMicroboard(x, y)) {
                     Move validPlacement = new Move(x, y);
                     allAvailableMoves.add(validPlacement);
                 }
@@ -71,13 +70,11 @@ public class Field implements IField {
 
     @Override
     public String getPlayerId(int column, int row) {
-
         return Board[column][row];
     }
 
     @Override
     public boolean isEmpty() {
-
         for (int x = 0; x < BoardSizeX; x++) {
             for (int y = 0; y < BoardSizeY; y++) {
                 if (!Board[x][y].equalsIgnoreCase(EMPTY_FIELD)) {
@@ -130,11 +127,5 @@ public class Field implements IField {
     public void setMacroboard(String[][] macroboard) {
 
         this.macroBoard = macroboard;
-
     }
-
-    public void setEmpty(String[][] board) {
-
-    }
-
 }
