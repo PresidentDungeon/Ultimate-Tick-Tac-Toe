@@ -12,6 +12,12 @@ public interface IField {
     String AVAILABLE_FIELD = "-1";
     String EMPTY_FIELD = ".";
     
+    int macroBoardSizeX = 3;
+    int macroBoardSizeY = 3;
+
+    int BoardSizeX = 9;
+    int BoardSizeY = 9;
+    
     
 
     /**

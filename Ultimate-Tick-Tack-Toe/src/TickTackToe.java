@@ -11,7 +11,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
@@ -25,13 +24,13 @@ public class TickTackToe extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("GameBoard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GeneratedWindow.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("EMG Film");
+        stage.setTitle("Ultimate Tick Tack Toe");
     }
 
     /**

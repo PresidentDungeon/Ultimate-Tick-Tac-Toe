@@ -172,11 +172,10 @@ public class GameManager {
             macroBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
 
         }
-        currentState.getField().setMacroboard(macroBoard);
+        currentState.getField().setMacroboard(macroBoard); //Måske?
     }
 
     private void updateStatistics() {
         currentState.setMoveNumber(currentState.getMoveNumber() + 1);
-        currentState.setRoundNumber(currentState.getRoundNumber() + 1);
     }
 }
