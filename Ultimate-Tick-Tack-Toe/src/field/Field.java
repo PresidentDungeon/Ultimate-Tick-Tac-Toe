@@ -16,18 +16,18 @@ import move.Move;
  */
 public class Field implements IField {
 
-    int macroBoardSizeX = 3;
-    int macroBoardSizeY = 3;
+    int microBoardSizeX = 3;
+    int microBoardSizeY = 3;
 
     int BoardSizeX = 9;
     int BoardSizeY = 9;
 
-   private String[][] macroBoard;
+   private String[][] microBoard;
    private String[][] Board;
 
     public Field() {
 
-        macroBoard = new String[macroBoardSizeX][macroBoardSizeY];
+        microBoard = new String[microBoardSizeX][microBoardSizeY];
         Board = new String[BoardSizeX][BoardSizeY];
         clearBoard();
 
@@ -36,10 +36,10 @@ public class Field implements IField {
     @Override
     public void clearBoard() {
 
-        for (int x = 0; x < macroBoardSizeX; x++) {
+        for (int x = 0; x < microBoardSizeX; x++) {
 
-            for (int y = 0; y < macroBoardSizeY; y++) {
-                macroBoard[x][y] = AVAILABLE_FIELD;
+            for (int y = 0; y < microBoardSizeY; y++) {
+                microBoard[x][y] = AVAILABLE_FIELD;
             }
         }
 
@@ -104,7 +104,7 @@ public class Field implements IField {
         int miniX = x/3;
         int miniY = y/3;
                 
-        return macroBoard[miniX][miniY].equalsIgnoreCase(AVAILABLE_FIELD);
+        return microBoard[miniX][miniY].equalsIgnoreCase(AVAILABLE_FIELD);
     }
 
     @Override
@@ -113,9 +113,9 @@ public class Field implements IField {
     }
 
     @Override
-    public String[][] getMacroboard() {
+    public String[][] getMicroboard() {
 
-        return macroBoard;
+        return microBoard;
     }
 
     @Override
@@ -124,8 +124,8 @@ public class Field implements IField {
     }
 
     @Override
-    public void setMacroboard(String[][] macroboard) {
+    public void setMicroboard(String[][] microboard) {
 
-        this.macroBoard = macroboard;
+        this.microBoard = microboard;
     }
 }
