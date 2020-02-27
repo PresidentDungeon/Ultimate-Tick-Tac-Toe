@@ -107,7 +107,7 @@ public class GameManager {
             btn.setText((currentPlayer == 0) ? "x" : "o");
             currentPlayer = (currentPlayer + 1) % 2;
             updateBoard(move);
-            updateMacroboard(move);
+            updateMicroboard(move);
 
         }
         
@@ -192,7 +192,7 @@ public class GameManager {
                     }
                 }
             }
-            macroBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
+            microBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
         }
         currentState.getField().setMicroboard(microBoard); //Måske?
     }
