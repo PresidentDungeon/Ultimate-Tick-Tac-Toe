@@ -6,6 +6,9 @@
 
 import button.CustomButton;
 import field.IField;
+import game.GameManager;
+import game.GameState;
+import game.IGameState;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -22,6 +25,8 @@ public class GeneratedWindowController implements Initializable {
 
     @FXML
     private AnchorPane mainPane;
+    IGameState gameState = new GameState();
+    GameManager gm = new GameManager(gameState);
 
     /**
      * Initializes the controller class.
@@ -58,6 +63,7 @@ public class GeneratedWindowController implements Initializable {
                 btn.setOnMouseClicked((mouseEvent)
                         -> {
                     getPosition(btn);
+                    playGame(btn);
 
                 });
 
@@ -66,7 +72,7 @@ public class GeneratedWindowController implements Initializable {
                 btn.setLayoutX(initialXPosition + (buttonWidth * x) + spacingX * 20);
                 btn.setLayoutY(initialYPosition + (buttonHeight * y) + spacingY * 20);
 
-                btn.setText("x");
+                btn.setText("");
                 btn.getStylesheets().add("/css/MainTheme.css");
 
                 mainPane.getChildren().add(btn);
@@ -79,6 +85,10 @@ public class GeneratedWindowController implements Initializable {
 
     public void getPosition(CustomButton button) {
         System.out.println(button.getX() + ", " + button.getY());
+    }
+
+    public void playGame(CustomButton button) {
+        gm.play(button);
     }
 
 }

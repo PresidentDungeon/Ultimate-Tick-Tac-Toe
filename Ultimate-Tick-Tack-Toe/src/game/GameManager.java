@@ -1,8 +1,10 @@
 package game;
 
 import bot.IBot;
+import button.CustomButton;
 import field.IField;
 import move.IMove;
+import move.Move;
 
 /**
  * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation
@@ -97,6 +99,28 @@ public class GameManager {
         return true;
     }
 
+    public void play(CustomButton btn)
+    {
+        IMove move = new Move(btn.getX(),btn.getY());
+        if (verifyMoveLegality(move))
+        {
+            btn.setText((currentPlayer == 0) ? "x" : "o");
+            currentPlayer = (currentPlayer + 1) % 2;
+            updateBoard(move);
+            updateMacroboard(move);
+
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
     /**
      * Non-User driven input, e.g. an update for playing a bot move.
      *
@@ -136,7 +160,8 @@ public class GameManager {
 
     private void updateBoard(IMove move) {
         updateStatistics();
-        currentState.getField().getBoard()[move.getX()][move.getY()] = currentPlayer + "";
+        currentState.getField().getBoard()[move.getX()][move.getY()] = 
+                    (currentPlayer == 0) ? "x" : "o";
     }
 
     private void updateMacroboard(IMove move) {
@@ -155,7 +180,6 @@ public class GameManager {
                 }
             }
         }
-        
         //Sets all available (besides finished boards) to unavailable 
         //if the next move is in an available board
         if (macroBoard[macroX][macroY].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
@@ -168,9 +192,7 @@ public class GameManager {
                     }
                 }
             }
-
             macroBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
-
         }
         currentState.getField().setMacroboard(macroBoard); //Måske?
     }
