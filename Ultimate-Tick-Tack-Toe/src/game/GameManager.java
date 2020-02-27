@@ -3,6 +3,7 @@ package game;
 import bot.IBot;
 import button.CustomButton;
 import field.IField;
+//import javafx.scene.control.Alert;
 import move.IMove;
 import move.Move;
 
@@ -200,4 +201,12 @@ public class GameManager {
     private void updateStatistics() {
         currentState.setMoveNumber(currentState.getMoveNumber() + 1);
     }
+    
+//    /**
+//     * This method will create a popup at the end of a game, to display
+//     * a congratulations message to the winner.
+//     */
+//    private void winnerAlert() {
+//        
+//    }
 }

@@ -36,6 +36,9 @@ public class GeneratedWindowController implements Initializable {
         generateButtons();
     }
 
+    /**
+     * Will generate game buttons at startup.
+     */
     public void generateButtons() {
         int initialXPosition = 90;
         int initialYPosition = 139;
@@ -83,10 +86,18 @@ public class GeneratedWindowController implements Initializable {
 
     }
 
+    /**
+     * Prints directions of clicked button into stacktrace.
+     * @param button 
+     */
     public void getPosition(CustomButton button) {
         System.out.println(button.getX() + ", " + button.getY());
     }
 
+    /**
+     * Starts the game.
+     * @param button 
+     */
     public void playGame(CustomButton button) {
         gm.play(button);
     }

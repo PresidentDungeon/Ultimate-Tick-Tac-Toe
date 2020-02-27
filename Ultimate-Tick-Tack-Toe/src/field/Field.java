@@ -33,6 +33,9 @@ public class Field implements IField {
 
     }
 
+    /**
+     * Resets the board for a new game.
+     */
     @Override
     public void clearBoard() {
 
@@ -52,6 +55,10 @@ public class Field implements IField {
 
     }
 
+    /**
+     * When a player clicks a field, this method will check if it is legal.
+     * @return 
+     */
     @Override
     public List<IMove> getAvailableMoves() {
 
@@ -68,6 +75,12 @@ public class Field implements IField {
         return allAvailableMoves;
     }
 
+    /**
+     * Who's turn is it?
+     * @param column
+     * @param row
+     * @return 
+     */
     @Override
     public String getPlayerId(int column, int row) {
         return Board[column][row];
