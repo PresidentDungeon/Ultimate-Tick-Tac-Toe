@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
 
 /**
  * FXML Controller class
@@ -66,6 +67,7 @@ public class GeneratedWindowController implements Initializable {
                 btn.setLayoutY(initialYPosition + (buttonHeight * y) + spacingY * 20);
 
                 btn.setText("x");
+                btn.getStylesheets().add("/css/MainTheme.css");
 
                 mainPane.getChildren().add(btn);
 
