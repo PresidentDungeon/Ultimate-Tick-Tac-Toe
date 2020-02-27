@@ -12,8 +12,8 @@ public interface IField {
     String AVAILABLE_FIELD = "-1";
     String EMPTY_FIELD = ".";
     
-    int macroBoardSizeX = 3;
-    int macroBoardSizeY = 3;
+    int microBoardSizeX = 3;
+    int microBoardSizeY = 3;
 
     int BoardSizeX = 9;
     int BoardSizeY = 9;
@@ -66,7 +66,7 @@ public interface IField {
     /**
      * @return the Macroboard (the overarching 3x3 board)
      */
-    String[][] getMacroboard();
+    String[][] getMicroboard();
 
     /**
      * @param board the Board to set (the entire 9x9 board)
@@ -76,6 +76,6 @@ public interface IField {
     /**
      * @param macroboard the Macroboard to set (the overarching 3x3 board)
      */
-    void setMacroboard(String[][] macroboard);
+    void setMicroboard(String[][] macroboard);
     
 }

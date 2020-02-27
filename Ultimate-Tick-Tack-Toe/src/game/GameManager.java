@@ -89,7 +89,7 @@ public class GameManager {
 
         //Update the currentState
         updateBoard(move);
-        updateMacroboard(move);
+        updateMicroboard(move);
 
         //Update currentPlayer
         currentPlayer = (currentPlayer + 1) % 2;
@@ -139,40 +139,40 @@ public class GameManager {
         currentState.getField().getBoard()[move.getX()][move.getY()] = currentPlayer + "";
     }
 
-    private void updateMacroboard(IMove move) {
+    private void updateMicroboard(IMove move) {
 
-        String[][] macroBoard = currentState.getField().getMacroboard();
+        String[][] microBoard = currentState.getField().getMicroboard();
 
         int macroX = move.getX() % 3;
         int macroY = move.getY() % 3;
 
         //Set all unavailable fields that are not already full or won to available
-        for (int x = 0; x < macroBoard.length; x++) {
-            for (int y = 0; y < macroBoard.length; y++) {
+        for (int x = 0; x < microBoard.length; x++) {
+            for (int y = 0; y < microBoard.length; y++) {
 
-                if (macroBoard[x][y].equalsIgnoreCase(UNAVAILABLE_FIELD)) {
-                    macroBoard[x][y] = IField.AVAILABLE_FIELD;
+                if (microBoard[x][y].equalsIgnoreCase(UNAVAILABLE_FIELD)) {
+                    microBoard[x][y] = IField.AVAILABLE_FIELD;
                 }
             }
         }
         
         //Sets all available (besides finished boards) to unavailable 
         //if the next move is in an available board
-        if (macroBoard[macroX][macroY].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
+        if (microBoard[macroX][macroY].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
 
-            for (int x = 0; x < macroBoard.length; x++) {
-                for (int y = 0; y < macroBoard.length; y++) {
+            for (int x = 0; x < microBoard.length; x++) {
+                for (int y = 0; y < microBoard.length; y++) {
 
-                    if (macroBoard[x][y].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
-                        macroBoard[x][y] = UNAVAILABLE_FIELD;
+                    if (microBoard[x][y].equalsIgnoreCase(IField.AVAILABLE_FIELD)) {
+                        microBoard[x][y] = UNAVAILABLE_FIELD;
                     }
                 }
             }
 
-            macroBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
+            microBoard[macroX][macroY] = IField.AVAILABLE_FIELD;
 
         }
-        currentState.getField().setMacroboard(macroBoard); //Måske?
+        currentState.getField().setMicroboard(microBoard); //Måske?
     }
 
     private void updateStatistics() {
