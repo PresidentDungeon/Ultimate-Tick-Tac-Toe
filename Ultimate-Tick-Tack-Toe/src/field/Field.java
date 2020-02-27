@@ -5,6 +5,7 @@
  */
 package field;
 
+import button.CustomButton;
 import java.util.ArrayList;
 import java.util.List;
 import move.IMove;
@@ -22,8 +23,8 @@ public class Field implements IField {
     int BoardSizeX = 9;
     int BoardSizeY = 9;
 
-   private String[][] microBoard;
-   private String[][] Board;
+    private String[][] microBoard;
+    private String[][] Board;
 
     public Field() {
 
@@ -57,7 +58,8 @@ public class Field implements IField {
 
     /**
      * When a player clicks a field, this method will check if it is legal.
-     * @return 
+     *
+     * @return
      */
     @Override
     public List<IMove> getAvailableMoves() {
@@ -77,9 +79,10 @@ public class Field implements IField {
 
     /**
      * Who's turn is it?
+     *
      * @param column
      * @param row
-     * @return 
+     * @return
      */
     @Override
     public String getPlayerId(int column, int row) {
@@ -112,11 +115,26 @@ public class Field implements IField {
     }
 
     @Override
+    public boolean checkMicroBoardFull(List<CustomButton> microBoardButtons) {
+        boolean isFull = true;
+
+        for (CustomButton b : microBoardButtons) {
+            System.out.println(Board[b.getX()][b.getY()].equalsIgnoreCase(EMPTY_FIELD));
+            if (Board[b.getX()][b.getY()].equalsIgnoreCase(EMPTY_FIELD)) {
+                isFull = false;
+                break;
+            }
+        }
+
+        return isFull;
+    }
+
+    @Override
     public Boolean isInActiveMicroboard(int x, int y) {
-        
-        int miniX = x/3;
-        int miniY = y/3;
-                
+
+        int miniX = x / 3;
+        int miniY = y / 3;
+
         return microBoard[miniX][miniY].equalsIgnoreCase(AVAILABLE_FIELD);
     }
 

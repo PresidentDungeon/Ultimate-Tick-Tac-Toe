@@ -1,5 +1,6 @@
 package field;
 
+import button.CustomButton;
 import java.util.List;
 import move.IMove;
 
@@ -48,6 +49,8 @@ public interface IField {
      */
     boolean isFull();
 
+    boolean checkMicroBoardFull(List<CustomButton> microBoardButtons);
+    
     /**
      * Checks whether a specific board position is available for input.
      * It checks whether the board position is available for play in the 

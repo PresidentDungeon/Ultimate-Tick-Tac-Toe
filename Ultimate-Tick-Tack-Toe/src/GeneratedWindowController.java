@@ -10,9 +10,12 @@ import game.GameManager;
 import game.GameState;
 import game.IGameState;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
@@ -88,18 +91,35 @@ public class GeneratedWindowController implements Initializable {
 
     /**
      * Prints directions of clicked button into stacktrace.
-     * @param button 
+     *
+     * @param button
      */
     public void getPosition(CustomButton button) {
-        System.out.println(button.getX() + ", " + button.getY());
+        System.out.println(button.getX() + ", " + button.getY() + " - " + button.getMicroId());
     }
 
     /**
      * Starts the game.
-     * @param button 
+     *
+     * @param button
      */
     public void playGame(CustomButton button) {
-        gm.play(button);
+
+//         String[][] test = new String[3][3];
+        
+        
+        List<CustomButton> microButtons = new ArrayList<>();
+
+        for (Node customButton : mainPane.getChildren()) {
+            CustomButton b = (CustomButton) customButton;
+
+            if (b.getMicroId() == button.getMicroId()) {
+                microButtons.add(b);
+            }
+
+        }
+
+        gm.play(button, microButtons);
     }
 
 }

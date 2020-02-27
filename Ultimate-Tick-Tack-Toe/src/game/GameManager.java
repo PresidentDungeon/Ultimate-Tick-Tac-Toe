@@ -3,6 +3,7 @@ package game;
 import bot.IBot;
 import button.CustomButton;
 import field.IField;
+import java.util.List;
 //import javafx.scene.control.Alert;
 import move.IMove;
 import move.Move;
@@ -100,16 +101,25 @@ public class GameManager {
         return true;
     }
 
-    public void play(CustomButton btn)
+    public void play(CustomButton btn, List<CustomButton> buttonsInMicroBoard)
     {
         IMove move = new Move(btn.getX(),btn.getY());
         if (verifyMoveLegality(move))
         {
             btn.setText((currentPlayer == 0) ? "x" : "o");
             currentPlayer = (currentPlayer + 1) % 2;
+
+
             updateBoard(move);
             updateMicroboard(move);
 
+                        
+            if (currentState.getField().checkMicroBoardFull(buttonsInMicroBoard))
+            {
+                currentState.getField().getMicroboard()[btn.getX()/3][btn.getY()/3] = FINISHED_FIELD;
+                System.out.println("Is full");
+            }
+            
         }
         
         
