@@ -5,6 +5,7 @@
  */
 package field;
 
+import button.CustomButton;
 import java.util.ArrayList;
 import java.util.List;
 import move.IMove;
@@ -22,8 +23,8 @@ public class Field implements IField {
     int BoardSizeX = 9;
     int BoardSizeY = 9;
 
-   private String[][] microBoard;
-   private String[][] Board;
+    private String[][] microBoard;
+    private String[][] Board;
 
     public Field() {
 
@@ -33,6 +34,9 @@ public class Field implements IField {
 
     }
 
+    /**
+     * Resets the board for a new game.
+     */
     @Override
     public void clearBoard() {
 
@@ -52,6 +56,11 @@ public class Field implements IField {
 
     }
 
+    /**
+     * When a player clicks a field, this method will check if it is legal.
+     *
+     * @return
+     */
     @Override
     public List<IMove> getAvailableMoves() {
 
@@ -68,6 +77,13 @@ public class Field implements IField {
         return allAvailableMoves;
     }
 
+    /**
+     * Who's turn is it?
+     *
+     * @param column
+     * @param row
+     * @return
+     */
     @Override
     public String getPlayerId(int column, int row) {
         return Board[column][row];
@@ -99,11 +115,132 @@ public class Field implements IField {
     }
 
     @Override
+    public boolean checkMicroBoardFull(List<CustomButton> microBoardButtons) {
+        boolean isFull = true;
+
+        for (CustomButton b : microBoardButtons) {
+            if (Board[b.getX()][b.getY()].equalsIgnoreCase(EMPTY_FIELD)) {
+                isFull = false;
+                break;
+            }
+        }
+
+        return isFull;
+    }
+
+    @Override
+    public String checkForWinnerInMicroBoard(List<CustomButton> microBoardButtons) {
+        int arrayLocation = 0;
+
+        String[][] clickedMicroBoard = new String[IField.microBoardSizeX][IField.microBoardSizeY];
+
+        for (int y = 0; y < IField.microBoardSizeY; y++) {
+            for (int x = 0; x < IField.microBoardSizeX; x++) {
+
+                CustomButton currentCustomButton = microBoardButtons.get(arrayLocation);
+                arrayLocation++;
+                clickedMicroBoard[x][y] = Board[currentCustomButton.getX()][currentCustomButton.getY()];
+            }
+        }
+
+        //Check for columns
+        for (int y = 0; y < microBoardSizeY; y++) {
+            if (!clickedMicroBoard[y][0].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[y][1].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[y][2].equalsIgnoreCase(EMPTY_FIELD)) {
+                if (clickedMicroBoard[y][0].equalsIgnoreCase(clickedMicroBoard[y][1])
+                        && clickedMicroBoard[y][0].equalsIgnoreCase(clickedMicroBoard[y][2])) {
+
+                    return clickedMicroBoard[y][0];
+                }
+            }
+        }
+
+        //Check for rows
+        for (int x = 0; x < microBoardSizeX; x++) {
+            if (!clickedMicroBoard[0][x].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[1][x].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[2][x].equalsIgnoreCase(EMPTY_FIELD)) {
+                if (clickedMicroBoard[0][x].equalsIgnoreCase(clickedMicroBoard[1][x])
+                        && clickedMicroBoard[0][x].equalsIgnoreCase(clickedMicroBoard[2][x])) {
+
+                    return clickedMicroBoard[0][x];
+                }
+            }
+        }
+
+        //Check for diag
+        if (!clickedMicroBoard[0][0].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[1][1].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[2][2].equalsIgnoreCase(EMPTY_FIELD)) {
+            if (clickedMicroBoard[0][0].equalsIgnoreCase(clickedMicroBoard[1][1])
+                    && clickedMicroBoard[0][0].equalsIgnoreCase(clickedMicroBoard[2][2])) {
+                return clickedMicroBoard[0][0];
+            }
+        }
+
+        //check for antiDiag
+        if (!clickedMicroBoard[0][2].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[1][1].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[2][0].equalsIgnoreCase(EMPTY_FIELD)) {
+            if (clickedMicroBoard[0][2].equalsIgnoreCase(clickedMicroBoard[1][1])
+                    && clickedMicroBoard[0][2].equalsIgnoreCase(clickedMicroBoard[2][0])) {
+
+                return clickedMicroBoard[0][2];
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public String checkForWinnerBoard() {
+
+        //Check for columns
+        for (int y = 0; y < microBoardSizeY; y++) {
+            if (microBoard[y][0].equalsIgnoreCase("x") && microBoard[y][1].equalsIgnoreCase("x") && microBoard[y][2].equalsIgnoreCase("x")
+                    || microBoard[y][0].equalsIgnoreCase("o") && microBoard[y][1].equalsIgnoreCase("o") && microBoard[y][2].equalsIgnoreCase("o")) {
+
+                if (microBoard[y][0].equalsIgnoreCase(microBoard[y][1])
+                        && microBoard[y][0].equalsIgnoreCase(microBoard[y][2])) {
+
+                    return microBoard[y][0];
+                }
+            }
+        }
+
+        //Check for rows
+        for (int x = 0; x < microBoardSizeX; x++) {
+            if (microBoard[0][x].equalsIgnoreCase("x") && microBoard[1][x].equalsIgnoreCase("x") && microBoard[2][x].equalsIgnoreCase("x")
+                    || microBoard[0][x].equalsIgnoreCase("o") && microBoard[1][x].equalsIgnoreCase("o") && microBoard[2][x].equalsIgnoreCase("o")) {
+                if (microBoard[0][x].equalsIgnoreCase(microBoard[1][x])
+                        && microBoard[0][x].equalsIgnoreCase(microBoard[2][x])) {
+
+                    return microBoard[0][x];
+                }
+            }
+        }
+
+        //Check for diag
+        if (microBoard[0][0].equalsIgnoreCase("x") && microBoard[1][1].equalsIgnoreCase("x") && microBoard[2][2].equalsIgnoreCase("x")
+                || microBoard[0][0].equalsIgnoreCase("o") && microBoard[1][1].equalsIgnoreCase("o") && microBoard[2][2].equalsIgnoreCase("o")) {
+            if (microBoard[0][0].equalsIgnoreCase(microBoard[1][1])
+                    && microBoard[0][0].equalsIgnoreCase(microBoard[2][2])) {
+                return microBoard[0][0];
+            }
+        }
+
+        //check for antiDiag
+        if (microBoard[0][2].equalsIgnoreCase("x") && microBoard[1][1].equalsIgnoreCase("x") && microBoard[2][0].equalsIgnoreCase("x")
+                || microBoard[0][2].equalsIgnoreCase("o") && microBoard[1][1].equalsIgnoreCase("o") && microBoard[2][0].equalsIgnoreCase("o")) {
+            if (microBoard[0][2].equalsIgnoreCase(microBoard[1][1])
+                    && microBoard[0][2].equalsIgnoreCase(microBoard[2][0])) {
+
+                return microBoard[0][2];
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public Boolean isInActiveMicroboard(int x, int y) {
-        
-        int miniX = x/3;
-        int miniY = y/3;
-                
+
+        int miniX = x / 3;
+        int miniY = y / 3;
+
         return microBoard[miniX][miniY].equalsIgnoreCase(AVAILABLE_FIELD);
     }
 

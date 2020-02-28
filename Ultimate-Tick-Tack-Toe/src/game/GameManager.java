@@ -3,16 +3,14 @@ package game;
 import bot.IBot;
 import button.CustomButton;
 import field.IField;
+import java.util.List;
+import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import move.IMove;
 import move.Move;
 
 /**
- * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation
- * of which is up to whoever uses this interface. Note that initializing a game
- * through the constructors means that you have to create a new instance of the
- * game manager for every new game of a different type (e.g. Human vs Human,
- * Human vs Bot or Bot vs Bot), which may not be ideal for your solution, so you
- * could consider refactoring that into an (re-)initialize method instead.
+ * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation of which is up to whoever uses this interface. Note that initializing a game through the constructors means that you have to create a new instance of the game manager for every new game of a different type (e.g. Human vs Human, Human vs Bot or Bot vs Bot), which may not be ideal for your solution, so you could consider refactoring that into an (re-)initialize method instead.
  *
  * @author mjl
  */
@@ -36,11 +34,9 @@ public class GameManager {
     private IBot bot2 = null;
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played
-     * Human vs Human
+     * Set's the currentState so the game can begin. Game expected to be played Human vs Human
      *
-     * @param currentState Current game state, usually an empty board, but could
-     * load a saved game.
+     * @param currentState Current game state, usually an empty board, but could load a saved game.
      */
     public GameManager(IGameState currentState) {
         this.currentState = currentState;
@@ -48,11 +44,9 @@ public class GameManager {
     }
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played
-     * Human vs Bot
+     * Set's the currentState so the game can begin. Game expected to be played Human vs Bot
      *
-     * @param currentState Current game state, usually an empty board, but could
-     * load a saved game.
+     * @param currentState Current game state, usually an empty board, but could load a saved game.
      * @param bot The bot to play against in vsBot mode.
      */
     public GameManager(IGameState currentState, IBot bot) {
@@ -62,11 +56,9 @@ public class GameManager {
     }
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played
-     * Bot vs Bot
+     * Set's the currentState so the game can begin. Game expected to be played Bot vs Bot
      *
-     * @param currentState Current game state, usually an empty board, but could
-     * load a saved game.
+     * @param currentState Current game state, usually an empty board, but could load a saved game.
      * @param bot The first bot to play.
      * @param bot2 The second bot to play.
      */
@@ -99,28 +91,41 @@ public class GameManager {
         return true;
     }
 
-    public void play(CustomButton btn)
-    {
-        IMove move = new Move(btn.getX(),btn.getY());
-        if (verifyMoveLegality(move))
-        {
+    public void play(CustomButton btn, List<CustomButton> buttonsInMicroBoard, List<CustomButton> allButtons) {
+        IMove move = new Move(btn.getX(), btn.getY());
+        if (verifyMoveLegality(move)) {
             btn.setText((currentPlayer == 0) ? "x" : "o");
-            currentPlayer = (currentPlayer + 1) % 2;
+
             updateBoard(move);
             updateMicroboard(move);
 
+            if (currentState.getField().checkMicroBoardFull(buttonsInMicroBoard)) {
+                currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = FINISHED_FIELD;
+                setAllFieldsToAvailable();
+                System.out.println("Is full");
+            }
+            if (currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard) != null) {
+                currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard);
+
+                if (currentState.getField().checkForWinnerBoard() != null) {
+                    showWinnerAlert("Concratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
+                }
+
+                setAllFieldsToAvailable();
+
+            }
+
+            if (currentState.getField().getAvailableMoves().size() == 0) {
+                showWinnerAlert("Draw!", "The game ended in a draw");
+            }
+
+                        highlightPlayableArea(allButtons);
+            
         }
-        
-        
-        
-        
-        
-        
-        
+
     }
-    
-    
-    
+
+    //No available fields - set draw
     /**
      * Non-User driven input, e.g. an update for playing a bot move.
      *
@@ -160,8 +165,9 @@ public class GameManager {
 
     private void updateBoard(IMove move) {
         updateStatistics();
-        currentState.getField().getBoard()[move.getX()][move.getY()] = 
-                    (currentPlayer == 0) ? "x" : "o";
+        currentState.getField().getBoard()[move.getX()][move.getY()]
+                = (currentPlayer == 0) ? "x" : "o";
+        currentPlayer = (currentPlayer + 1) % 2;
     }
 
     private void updateMicroboard(IMove move) {
@@ -197,7 +203,55 @@ public class GameManager {
         currentState.getField().setMicroboard(microBoard); //Måske?
     }
 
+    public void setAllFieldsToAvailable() {
+        //Set all unavailable fields that are not already full or won to available
+        for (int x = 0; x < IField.microBoardSizeX; x++) {
+            for (int y = 0; y < IField.microBoardSizeY; y++) {
+
+                if (currentState.getField().getMicroboard()[x][y].equalsIgnoreCase(UNAVAILABLE_FIELD)) {
+                    currentState.getField().getMicroboard()[x][y] = IField.AVAILABLE_FIELD;
+                }
+            }
+        }
+    }
+
     private void updateStatistics() {
         currentState.setMoveNumber(currentState.getMoveNumber() + 1);
+    }
+
+    public void highlightPlayableArea(List<CustomButton> allButtons)
+    {
+        for (CustomButton button : allButtons)
+        {
+            button.getStylesheets().clear();
+            button.getStylesheets().add("css/MainTheme.css");
+        }
+
+        List<IMove> availableMoves = currentState.getField().getAvailableMoves();
+        
+        for (CustomButton b : allButtons)
+        {
+            for(IMove move : availableMoves)
+            {
+                if (b.getX() == move.getX() && b.getY() == move.getY())
+                {
+                    b.getStylesheets().add("css/ClickableButton.css");
+                    break;
+                }
+            }
+        }
+    }
+    
+    /**
+     * Opens a error box to be displayed.
+     *
+     * @param contentText the message that the error box should display.
+     */
+    public void showWinnerAlert(String header, String Winner) {
+        Alert errAlert = new Alert(Alert.AlertType.INFORMATION);
+        errAlert.setTitle(header);
+        errAlert.setHeaderText(null);
+        errAlert.setContentText(Winner);
+        errAlert.showAndWait();
     }
 }
