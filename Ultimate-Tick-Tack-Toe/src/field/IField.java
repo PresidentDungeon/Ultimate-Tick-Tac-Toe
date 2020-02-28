@@ -59,7 +59,7 @@ public interface IField {
     /**
      * Checks whether a specific board position is available for input.
      * It checks whether the board position is available for play in the 
-     * macroboard (3x3), where it is marked using the AVAILABLE_FIELD character.
+     * microboard (3x3), where it is marked using the AVAILABLE_FIELD character.
      * @param x
      * @param y
      * @return Returns true if the board position at (x,y) is available for input, false otherwise.
@@ -72,7 +72,7 @@ public interface IField {
     String[][] getBoard();
 
     /**
-     * @return the Macroboard (the overarching 3x3 board)
+     * @return the Microboard (the overarching 3x3 board)
      */
     String[][] getMicroboard();
 
@@ -82,8 +82,8 @@ public interface IField {
     void setBoard(String[][] board);
 
     /**
-     * @param macroboard the Macroboard to set (the overarching 3x3 board)
+     * @param microboard the Microboard to set (the overarching 3x3 board)
      */
-    void setMicroboard(String[][] macroboard);
+    void setMicroboard(String[][] microboard);
     
 }

@@ -53,7 +53,7 @@ public class Field implements IField {
                 Board[x][y] = EMPTY_FIELD;
             }
         }
-
+        
     }
 
     /**

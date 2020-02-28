@@ -10,7 +10,12 @@ import move.IMove;
 import move.Move;
 
 /**
- * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation of which is up to whoever uses this interface. Note that initializing a game through the constructors means that you have to create a new instance of the game manager for every new game of a different type (e.g. Human vs Human, Human vs Bot or Bot vs Bot), which may not be ideal for your solution, so you could consider refactoring that into an (re-)initialize method instead.
+ * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation
+ * of which is up to whoever uses this interface. Note that initializing a game
+ * through the constructors means that you have to create a new instance of the
+ * game manager for every new game of a different type (e.g. Human vs Human,
+ * Human vs Bot or Bot vs Bot), which may not be ideal for your solution, so you
+ * could consider refactoring that into an (re-)initialize method instead.
  *
  * @author mjl
  */
@@ -34,9 +39,11 @@ public class GameManager {
     private IBot bot2 = null;
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played Human vs Human
+     * Set's the currentState so the game can begin. Game expected to be played
+     * Human vs Human
      *
-     * @param currentState Current game state, usually an empty board, but could load a saved game.
+     * @param currentState Current game state, usually an empty board, but could
+     * load a saved game.
      */
     public GameManager(IGameState currentState) {
         this.currentState = currentState;
@@ -44,9 +51,11 @@ public class GameManager {
     }
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played Human vs Bot
+     * Set's the currentState so the game can begin. Game expected to be played
+     * Human vs Bot
      *
-     * @param currentState Current game state, usually an empty board, but could load a saved game.
+     * @param currentState Current game state, usually an empty board, but could
+     * load a saved game.
      * @param bot The bot to play against in vsBot mode.
      */
     public GameManager(IGameState currentState, IBot bot) {
@@ -56,9 +65,11 @@ public class GameManager {
     }
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played Bot vs Bot
+     * Set's the currentState so the game can begin. Game expected to be played
+     * Bot vs Bot
      *
-     * @param currentState Current game state, usually an empty board, but could load a saved game.
+     * @param currentState Current game state, usually an empty board, but could
+     * load a saved game.
      * @param bot The first bot to play.
      * @param bot2 The second bot to play.
      */
@@ -108,15 +119,16 @@ public class GameManager {
                 currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard);
 
                 String id = ((currentPlayer == 1) ? "blue" : "red");
-                
-                for (CustomButton b : buttonsInMicroBoard)
-                {
+
+                for (CustomButton b : buttonsInMicroBoard) {
                     b.setId(id);
                 }
-                
-                
+
                 if (currentState.getField().checkForWinnerBoard() != null) {
                     showWinnerAlert("Concratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
+                    currentState.getField().clearBoard();
+                    clearGUI(allButtons);
+                    currentState.setRoundNumber(+1);
                 }
 
                 setAllFieldsToAvailable();
@@ -125,10 +137,13 @@ public class GameManager {
 
             if (currentState.getField().getAvailableMoves().size() == 0) {
                 showWinnerAlert("Draw!", "The game ended in a draw");
+                currentState.getField().clearBoard();
+                clearGUI(allButtons);
+                currentState.setRoundNumber(+1);
             }
 
-                        highlightPlayableArea(allButtons);
-            
+            highlightPlayableArea(allButtons);
+
         }
 
     }
@@ -227,26 +242,32 @@ public class GameManager {
         currentState.setMoveNumber(currentState.getMoveNumber() + 1);
     }
 
-    public void highlightPlayableArea(List<CustomButton> allButtons)
-    {
-        for (CustomButton button : allButtons)
-        {
+    public void highlightPlayableArea(List<CustomButton> allButtons) {
+        for (CustomButton button : allButtons) {
             button.getStylesheets().clear();
             button.getStylesheets().add("css/MainTheme.css");
         }
 
         List<IMove> availableMoves = currentState.getField().getAvailableMoves();
-        
-        for (CustomButton b : allButtons)
-        {
-            for(IMove move : availableMoves)
-            {
-                if (b.getX() == move.getX() && b.getY() == move.getY())
-                {
+
+        for (CustomButton b : allButtons) {
+            for (IMove move : availableMoves) {
+                if (b.getX() == move.getX() && b.getY() == move.getY()) {
                     b.getStylesheets().add("css/ClickableButton.css");
                     break;
                 }
             }
+        }
+    }
+
+    public void clearGUI(List<CustomButton> buttons)
+    {
+    for (CustomButton button : buttons)
+        {
+            button.setText("");
+            button.getStylesheets().clear();
+            button.getStylesheets().add("css/ClickableButton.css");
+            button.setId("");
         }
     }
     
