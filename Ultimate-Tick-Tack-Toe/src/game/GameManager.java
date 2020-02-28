@@ -126,8 +126,7 @@ public class GameManager {
 
                 if (currentState.getField().checkForWinnerBoard() != null) {
                     showWinnerAlert("Concratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
-                    currentState.getField().clearBoard();
-                    clearGUI(allButtons);
+                    clearAll(allButtons);
                     currentState.setRoundNumber(+1);
                 }
 
@@ -137,8 +136,7 @@ public class GameManager {
 
             if (currentState.getField().getAvailableMoves().size() == 0) {
                 showWinnerAlert("Draw!", "The game ended in a draw");
-                currentState.getField().clearBoard();
-                clearGUI(allButtons);
+                clearAll(allButtons);
                 currentState.setRoundNumber(+1);
             }
 
@@ -260,7 +258,7 @@ public class GameManager {
         }
     }
 
-    public void clearGUI(List<CustomButton> buttons)
+    public void clearAll(List<CustomButton> buttons)
     {
     for (CustomButton button : buttons)
         {
@@ -268,6 +266,8 @@ public class GameManager {
             button.getStylesheets().clear();
             button.getStylesheets().add("css/ClickableButton.css");
             button.setId("");
+            currentState.getField().clearBoard();
+            currentPlayer = 0;
         }
     }
     

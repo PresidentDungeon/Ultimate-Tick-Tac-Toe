@@ -5,6 +5,7 @@
  */
 
 import button.CustomButton;
+import com.jfoenix.controls.JFXButton;
 import field.IField;
 import game.GameManager;
 import game.GameState;
@@ -13,9 +14,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 
@@ -32,6 +35,12 @@ public class GeneratedWindowController implements Initializable {
     GameManager gm = new GameManager(gameState);
     @FXML
     private AnchorPane buttonPane;
+    @FXML
+    private Label movesID;
+    @FXML
+    private Label winsCross;
+    @FXML
+    private Label winsCircle;
 
     /**
      * Initializes the controller class.
@@ -136,5 +145,10 @@ public class GeneratedWindowController implements Initializable {
 
         }
         return allButtons;
+    }
+
+    @FXML
+    private void resetButton(ActionEvent event) {
+        gm.clearAll(getAllButtons());
     }
 }

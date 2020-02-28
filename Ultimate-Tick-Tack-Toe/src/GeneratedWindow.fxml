@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -28,11 +29,6 @@
             <Image url="@circle-outline%20(1).png" />
          </image>
       </ImageView>
-      <Label fx:id="resetButton" layoutX="514.0" layoutY="380.0" text="Reset">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
       <Label layoutX="441.0" layoutY="322.0" text="Moves:">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -43,5 +39,10 @@
       <Label layoutX="441.0" layoutY="212.0" text="Wins:" />
       <Label fx:id="winsCross" layoutX="475.0" layoutY="139.0" text="label" />
       <Label fx:id="winsCircle" layoutX="475.0" layoutY="212.0" text="label" />
+      <JFXButton layoutX="509.0" layoutY="415.0" onAction="#resetButton" text="Reset">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
