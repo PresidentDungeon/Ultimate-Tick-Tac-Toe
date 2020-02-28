@@ -30,7 +30,7 @@ public class TickTackToe extends Application
         
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Ultimate Tick Tack Toe");
+        stage.setTitle("Ultimate Tic Tac Toe");
     }
 
     /**
