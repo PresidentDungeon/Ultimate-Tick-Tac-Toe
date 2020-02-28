@@ -5,6 +5,7 @@ import button.CustomButton;
 import field.IField;
 import java.util.List;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 //import javafx.scene.control.Alert;
 import move.IMove;
 import move.Move;
@@ -37,6 +38,10 @@ public class GameManager {
     private GameMode mode = GameMode.HumanVsHuman;
     private IBot bot = null;
     private IBot bot2 = null;
+    private int winX = 0;
+    private int winO = 0;
+    private Label winsCircle = null;
+    private Label winsCross = null;
 
     /**
      * Set's the currentState so the game can begin. Game expected to be played
@@ -113,7 +118,6 @@ public class GameManager {
             if (currentState.getField().checkMicroBoardFull(buttonsInMicroBoard)) {
                 currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = FINISHED_FIELD;
                 setAllFieldsToAvailable();
-                System.out.println("Is full");
             }
             if (currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard) != null) {
                 currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard);
@@ -126,12 +130,19 @@ public class GameManager {
 
                 if (currentState.getField().checkForWinnerBoard() != null) {
                     showWinnerAlert("Concratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
+
+                    if (currentState.getField().checkForWinnerBoard().equalsIgnoreCase("x")) {
+                        winX++;
+                    } else {
+                        winO++;
+                    }
+
+                    updateLabels();
+
                     clearAll(allButtons);
                     currentState.setRoundNumber(+1);
                 }
-
                 setAllFieldsToAvailable();
-
             }
 
             if (currentState.getField().getAvailableMoves().size() == 0) {
@@ -139,11 +150,8 @@ public class GameManager {
                 clearAll(allButtons);
                 currentState.setRoundNumber(+1);
             }
-
             highlightPlayableArea(allButtons);
-
         }
-
     }
 
     //No available fields - set draw
@@ -258,10 +266,8 @@ public class GameManager {
         }
     }
 
-    public void clearAll(List<CustomButton> buttons)
-    {
-    for (CustomButton button : buttons)
-        {
+    public void clearAll(List<CustomButton> buttons) {
+        for (CustomButton button : buttons) {
             button.setText("");
             button.getStylesheets().clear();
             button.getStylesheets().add("css/ClickableButton.css");
@@ -270,7 +276,7 @@ public class GameManager {
             currentPlayer = 0;
         }
     }
-    
+
     /**
      * Opens a error box to be displayed.
      *
@@ -282,5 +288,15 @@ public class GameManager {
         errAlert.setHeaderText(null);
         errAlert.setContentText(Winner);
         errAlert.showAndWait();
+    }
+
+    public void setLabels(Label winsCross, Label winsCircle) {
+        this.winsCross = winsCross;
+        this.winsCircle = winsCircle;
+    }
+
+    public void updateLabels() {
+        winsCross.setText(winX + "");
+        winsCircle.setText(winO + "");
     }
 }

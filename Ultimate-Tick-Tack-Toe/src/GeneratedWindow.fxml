@@ -29,16 +29,10 @@
             <Image url="@circle-outline%20(1).png" />
          </image>
       </ImageView>
-      <Label layoutX="441.0" layoutY="322.0" text="Moves:">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="movesID" layoutX="502.0" layoutY="326.0" text="Label" />
       <Label layoutX="443.0" layoutY="139.0" text="Wins:" />
       <Label layoutX="441.0" layoutY="212.0" text="Wins:" />
-      <Label fx:id="winsCross" layoutX="475.0" layoutY="139.0" text="label" />
-      <Label fx:id="winsCircle" layoutX="475.0" layoutY="212.0" text="label" />
+      <Label fx:id="winsCross" layoutX="475.0" layoutY="139.0" text="0" />
+      <Label fx:id="winsCircle" layoutX="475.0" layoutY="212.0" text="0" />
       <JFXButton layoutX="509.0" layoutY="415.0" onAction="#resetButton" text="Reset">
          <font>
             <Font name="System Bold" size="16.0" />

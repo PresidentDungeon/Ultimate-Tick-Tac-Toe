@@ -49,6 +49,7 @@ public class GeneratedWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         generateButtons();
         gm.highlightPlayableArea(getAllButtons());
+        sendLabels();
     }
 
     /**
@@ -150,5 +151,10 @@ public class GeneratedWindowController implements Initializable {
     @FXML
     private void resetButton(ActionEvent event) {
         gm.clearAll(getAllButtons());
+    }
+    
+    public void sendLabels()
+    {
+        gm.setLabels(winsCross, winsCircle);
     }
 }
