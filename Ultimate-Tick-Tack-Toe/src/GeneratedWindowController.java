@@ -108,16 +108,19 @@ public class GeneratedWindowController implements Initializable {
         
         
         List<CustomButton> microButtons = new ArrayList<>();
+        List<CustomButton> allButtons = new ArrayList<>();
 
         for (Node customButton : mainPane.getChildren()) {
             CustomButton b = (CustomButton) customButton;
-
+            
+            allButtons.add(b);
+            
             if (b.getMicroId() == button.getMicroId()) {
                 microButtons.add(b);
             }
 
         }
         
-        gm.play(button, microButtons);
+        gm.play(button, microButtons, allButtons);
     }    
 }
