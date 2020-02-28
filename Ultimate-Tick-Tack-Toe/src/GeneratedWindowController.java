@@ -51,17 +51,17 @@ public class GeneratedWindowController implements Initializable {
         int spacingX = 0;
         int spacingY = 0;
 
-        for (int x = 0; x < IField.BoardSizeX; x++) {
+        for (int y = 0; y < IField.BoardSizeY; y++) {
 
-            spacingY = 0;
-            if (x == 3 || x == 6) {
-                spacingX += 1;
+            spacingX = 0;
+            if (y == 3 || y == 6) {
+                spacingY += 1;
             }
 
-            for (int y = 0; y < IField.BoardSizeY; y++) {
+            for (int x = 0; x < IField.BoardSizeX; x++) {
 
-                if (y == 3 || y == 6) {
-                    spacingY += 1;
+                if (x == 3 || x == 6) {
+                    spacingX += 1;
                 }
 
                 CustomButton btn = new CustomButton(x, y);
@@ -95,7 +95,6 @@ public class GeneratedWindowController implements Initializable {
      * @param button
      */
     public void getPosition(CustomButton button) {
-        System.out.println(button.getX() + ", " + button.getY() + " - " + button.getMicroId());
     }
 
     /**
@@ -118,8 +117,7 @@ public class GeneratedWindowController implements Initializable {
             }
 
         }
-
+        
         gm.play(button, microButtons);
-    }
-
+    }    
 }

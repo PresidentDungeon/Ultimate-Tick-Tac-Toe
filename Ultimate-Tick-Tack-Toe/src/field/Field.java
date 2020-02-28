@@ -119,7 +119,6 @@ public class Field implements IField {
         boolean isFull = true;
 
         for (CustomButton b : microBoardButtons) {
-            System.out.println(Board[b.getX()][b.getY()].equalsIgnoreCase(EMPTY_FIELD));
             if (Board[b.getX()][b.getY()].equalsIgnoreCase(EMPTY_FIELD)) {
                 isFull = false;
                 break;
@@ -127,6 +126,62 @@ public class Field implements IField {
         }
 
         return isFull;
+    }
+
+    public String checkForWinnerInMicroBoard(List<CustomButton> microBoardButtons) {
+        int arrayLocation = 0;
+
+        String[][] clickedMicroBoard = new String[IField.microBoardSizeX][IField.microBoardSizeY];
+
+        for (int y = 0; y < IField.microBoardSizeY; y++) {
+            for (int x = 0; x < IField.microBoardSizeX; x++) {
+                
+                CustomButton currentCustomButton = microBoardButtons.get(arrayLocation);
+                arrayLocation++;
+                clickedMicroBoard[x][y] = Board[currentCustomButton.getX()][currentCustomButton.getY()];
+            }
+        }
+
+        //Check for columns
+        for (int y = 0; y < microBoardSizeY; y++) {
+            if (!clickedMicroBoard[y][0].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[y][1].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[y][2].equalsIgnoreCase(EMPTY_FIELD)) {
+                if (clickedMicroBoard[y][0].equalsIgnoreCase(clickedMicroBoard[y][1])
+                        && clickedMicroBoard[y][0].equalsIgnoreCase(clickedMicroBoard[y][2])) {
+
+                    return clickedMicroBoard[y][0];
+                }
+            }
+        }
+
+        //Check for rows
+        for (int x = 0; x < microBoardSizeX; x++) {
+            if (!clickedMicroBoard[0][x].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[1][x].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[2][x].equalsIgnoreCase(EMPTY_FIELD)) {
+                if (clickedMicroBoard[0][x].equalsIgnoreCase(clickedMicroBoard[1][x])
+                        && clickedMicroBoard[0][x].equalsIgnoreCase(clickedMicroBoard[2][x])) {
+
+                    return clickedMicroBoard[0][x];
+                }
+            }
+        }
+        
+        //Check for diag
+        if (!clickedMicroBoard[0][0].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[1][1].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[2][2].equalsIgnoreCase(EMPTY_FIELD)) {
+            if (clickedMicroBoard[0][0].equalsIgnoreCase(clickedMicroBoard[1][1])
+                    && clickedMicroBoard[0][0].equalsIgnoreCase(clickedMicroBoard[2][2])) {
+                return clickedMicroBoard[0][0];
+            }
+        }
+
+        //check for antiDiag
+        if (!clickedMicroBoard[0][2].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[1][1].equalsIgnoreCase(EMPTY_FIELD) && !clickedMicroBoard[2][0].equalsIgnoreCase(EMPTY_FIELD)) {
+            if (clickedMicroBoard[0][2].equalsIgnoreCase(clickedMicroBoard[1][1])
+                    && clickedMicroBoard[0][2].equalsIgnoreCase(clickedMicroBoard[2][0])) {
+
+                return clickedMicroBoard[0][2];
+            }
+        }
+
+        return null;
     }
 
     @Override

@@ -51,6 +51,8 @@ public interface IField {
 
     boolean checkMicroBoardFull(List<CustomButton> microBoardButtons);
     
+    String checkForWinnerInMicroBoard(List<CustomButton> microBoardButtons);
+    
     /**
      * Checks whether a specific board position is available for input.
      * It checks whether the board position is available for play in the 
