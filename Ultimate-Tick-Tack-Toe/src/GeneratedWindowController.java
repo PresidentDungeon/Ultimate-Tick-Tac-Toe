@@ -30,6 +30,8 @@ public class GeneratedWindowController implements Initializable {
     private AnchorPane mainPane;
     IGameState gameState = new GameState();
     GameManager gm = new GameManager(gameState);
+    @FXML
+    private AnchorPane buttonPane;
 
     /**
      * Initializes the controller class.
@@ -43,8 +45,8 @@ public class GeneratedWindowController implements Initializable {
      * Will generate game buttons at startup.
      */
     public void generateButtons() {
-        int initialXPosition = 90;
-        int initialYPosition = 139;
+        int initialXPosition = 0;
+        int initialYPosition = 0;
         int buttonWidth = 30;
         int buttonHeight = 30;
 
@@ -81,7 +83,8 @@ public class GeneratedWindowController implements Initializable {
                 btn.setText("");
                 btn.getStylesheets().add("/css/MainTheme.css");
 
-                mainPane.getChildren().add(btn);
+                buttonPane.getChildren().add(btn);
+//                mainPane.getChildren().add(btn);
 
             }
 
@@ -110,7 +113,7 @@ public class GeneratedWindowController implements Initializable {
         List<CustomButton> microButtons = new ArrayList<>();
         List<CustomButton> allButtons = new ArrayList<>();
 
-        for (Node customButton : mainPane.getChildren()) {
+        for (Node customButton : buttonPane.getChildren()) {
             CustomButton b = (CustomButton) customButton;
             
             allButtons.add(b);
