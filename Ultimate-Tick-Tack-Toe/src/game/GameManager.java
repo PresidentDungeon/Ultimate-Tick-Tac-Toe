@@ -118,7 +118,7 @@ public class GameManager {
             if (currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard) != null) {
                 currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard);
 
-                String id = ((currentPlayer == 1) ? "blue" : "red");
+                String id = ((currentPlayer == 0) ? "blue" : "red");
 
                 for (CustomButton b : buttonsInMicroBoard) {
                     b.setId(id);

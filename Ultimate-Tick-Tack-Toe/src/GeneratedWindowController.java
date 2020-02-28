@@ -39,6 +39,7 @@ public class GeneratedWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         generateButtons();
+        gm.highlightPlayableArea(getAllButtons());
     }
 
     /**
@@ -108,22 +109,32 @@ public class GeneratedWindowController implements Initializable {
     public void playGame(CustomButton button) {
 
 //         String[][] test = new String[3][3];
-        
-        
         List<CustomButton> microButtons = new ArrayList<>();
         List<CustomButton> allButtons = new ArrayList<>();
 
         for (Node customButton : buttonPane.getChildren()) {
             CustomButton b = (CustomButton) customButton;
-            
+
             allButtons.add(b);
-            
+
             if (b.getMicroId() == button.getMicroId()) {
                 microButtons.add(b);
             }
 
         }
-        
+
         gm.play(button, microButtons, allButtons);
-    }    
+    }
+
+    public List<CustomButton> getAllButtons() {
+        List<CustomButton> allButtons = new ArrayList<>();
+
+        for (Node customButton : buttonPane.getChildren()) {
+            CustomButton b = (CustomButton) customButton;
+
+            allButtons.add(b);
+
+        }
+        return allButtons;
+    }
 }
