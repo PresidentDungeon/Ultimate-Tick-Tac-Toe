@@ -4,7 +4,6 @@ import bot.IBot;
 import button.CustomButton;
 import field.IField;
 import java.util.List;
-import javafx.scene.control.Alert;
 //import javafx.scene.control.Alert;
 import move.IMove;
 import move.Move;
@@ -91,7 +90,7 @@ public class GameManager {
         return true;
     }
 
-    public void play(CustomButton btn, List<CustomButton> buttonsInMicroBoard, List<CustomButton> allButtons) {
+    public void play(CustomButton btn, List<CustomButton> buttonsInMicroBoard) {
         IMove move = new Move(btn.getX(), btn.getY());
         if (verifyMoveLegality(move)) {
             btn.setText((currentPlayer == 0) ? "x" : "o");
@@ -101,31 +100,21 @@ public class GameManager {
 
             if (currentState.getField().checkMicroBoardFull(buttonsInMicroBoard)) {
                 currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = FINISHED_FIELD;
-                setAllFieldsToAvailable();
                 System.out.println("Is full");
             }
             if (currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard) != null) {
                 currentState.getField().getMicroboard()[btn.getX() / 3][btn.getY() / 3] = currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard);
-
-                if (currentState.getField().checkForWinnerBoard() != null) {
-                    showWinnerAlert("Concratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
-                }
-
+                
                 setAllFieldsToAvailable();
-
+                
+                
+                System.out.println("Winner is: " + currentState.getField().checkForWinnerInMicroBoard(buttonsInMicroBoard));
             }
 
-            if (currentState.getField().getAvailableMoves().size() == 0) {
-                showWinnerAlert("Draw!", "The game ended in a draw");
-            }
-
-                        highlightPlayableArea(allButtons);
-            
         }
 
     }
 
-    //No available fields - set draw
     /**
      * Non-User driven input, e.g. an update for playing a bot move.
      *
@@ -202,9 +191,10 @@ public class GameManager {
         }
         currentState.getField().setMicroboard(microBoard); //Måske?
     }
-
-    public void setAllFieldsToAvailable() {
-        //Set all unavailable fields that are not already full or won to available
+    
+    public void setAllFieldsToAvailable()
+    {
+            //Set all unavailable fields that are not already full or won to available
         for (int x = 0; x < IField.microBoardSizeX; x++) {
             for (int y = 0; y < IField.microBoardSizeY; y++) {
 
@@ -219,39 +209,11 @@ public class GameManager {
         currentState.setMoveNumber(currentState.getMoveNumber() + 1);
     }
 
-    public void highlightPlayableArea(List<CustomButton> allButtons)
-    {
-        for (CustomButton button : allButtons)
-        {
-            button.getStylesheets().clear();
-            button.getStylesheets().add("css/MainTheme.css");
-        }
-
-        List<IMove> availableMoves = currentState.getField().getAvailableMoves();
-        
-        for (CustomButton b : allButtons)
-        {
-            for(IMove move : availableMoves)
-            {
-                if (b.getX() == move.getX() && b.getY() == move.getY())
-                {
-                    b.getStylesheets().add("css/ClickableButton.css");
-                    break;
-                }
-            }
-        }
-    }
-    
-    /**
-     * Opens a error box to be displayed.
-     *
-     * @param contentText the message that the error box should display.
-     */
-    public void showWinnerAlert(String header, String Winner) {
-        Alert errAlert = new Alert(Alert.AlertType.INFORMATION);
-        errAlert.setTitle(header);
-        errAlert.setHeaderText(null);
-        errAlert.setContentText(Winner);
-        errAlert.showAndWait();
-    }
+//    /**
+//     * This method will create a popup at the end of a game, to display
+//     * a congratulations message to the winner.
+//     */
+//    private void winnerAlert() {
+//        
+//    }
 }

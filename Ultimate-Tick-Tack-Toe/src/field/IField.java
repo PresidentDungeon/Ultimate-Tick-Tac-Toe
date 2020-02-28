@@ -12,7 +12,6 @@ public interface IField {
 
     String AVAILABLE_FIELD = "-1";
     String EMPTY_FIELD = ".";
-    String UNAVAILABLY_FIELD = "*";
     
     int microBoardSizeX = 3;
     int microBoardSizeY = 3;
@@ -53,8 +52,6 @@ public interface IField {
     boolean checkMicroBoardFull(List<CustomButton> microBoardButtons);
     
     String checkForWinnerInMicroBoard(List<CustomButton> microBoardButtons);
-    
-    String checkForWinnerBoard();
     
     /**
      * Checks whether a specific board position is available for input.
