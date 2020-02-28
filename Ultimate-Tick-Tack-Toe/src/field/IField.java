@@ -76,6 +76,6 @@ public interface IField {
     /**
      * @param macroboard the Macroboard to set (the overarching 3x3 board)
      */
-    void setMicroboard(String[][] macroboard);
+    void setMicroboard(String[][] microboard);
     
 }
