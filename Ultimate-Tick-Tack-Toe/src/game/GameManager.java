@@ -11,12 +11,7 @@ import move.IMove;
 import move.Move;
 
 /**
- * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation
- * of which is up to whoever uses this interface. Note that initializing a game
- * through the constructors means that you have to create a new instance of the
- * game manager for every new game of a different type (e.g. Human vs Human,
- * Human vs Bot or Bot vs Bot), which may not be ideal for your solution, so you
- * could consider refactoring that into an (re-)initialize method instead.
+ * This is a proposed GameManager for Ultimate Tic-Tac-Toe, the implementation of which is up to whoever uses this interface. Note that initializing a game through the constructors means that you have to create a new instance of the game manager for every new game of a different type (e.g. Human vs Human, Human vs Bot or Bot vs Bot), which may not be ideal for your solution, so you could consider refactoring that into an (re-)initialize method instead.
  *
  * @author mjl
  */
@@ -42,13 +37,13 @@ public class GameManager {
     private int winO = 0;
     private Label winsCircle = null;
     private Label winsCross = null;
+    private Label PlayerXTurnID;
+    private Label PlayerOTurnID;
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played
-     * Human vs Human
+     * Set's the currentState so the game can begin. Game expected to be played Human vs Human
      *
-     * @param currentState Current game state, usually an empty board, but could
-     * load a saved game.
+     * @param currentState Current game state, usually an empty board, but could load a saved game.
      */
     public GameManager(IGameState currentState) {
         this.currentState = currentState;
@@ -56,11 +51,9 @@ public class GameManager {
     }
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played
-     * Human vs Bot
+     * Set's the currentState so the game can begin. Game expected to be played Human vs Bot
      *
-     * @param currentState Current game state, usually an empty board, but could
-     * load a saved game.
+     * @param currentState Current game state, usually an empty board, but could load a saved game.
      * @param bot The bot to play against in vsBot mode.
      */
     public GameManager(IGameState currentState, IBot bot) {
@@ -70,11 +63,9 @@ public class GameManager {
     }
 
     /**
-     * Set's the currentState so the game can begin. Game expected to be played
-     * Bot vs Bot
+     * Set's the currentState so the game can begin. Game expected to be played Bot vs Bot
      *
-     * @param currentState Current game state, usually an empty board, but could
-     * load a saved game.
+     * @param currentState Current game state, usually an empty board, but could load a saved game.
      * @param bot The first bot to play.
      * @param bot2 The second bot to play.
      */
@@ -143,6 +134,7 @@ public class GameManager {
                     currentState.setRoundNumber(+1);
                 }
                 setAllFieldsToAvailable();
+
             }
 
             if (currentState.getField().getAvailableMoves().size() == 0) {
@@ -151,6 +143,15 @@ public class GameManager {
                 currentState.setRoundNumber(+1);
             }
             highlightPlayableArea(allButtons);
+
+            if (currentPlayer == 0) {
+                PlayerOTurnID.setVisible(false);
+                PlayerXTurnID.setVisible(true);
+            } else {
+                PlayerOTurnID.setVisible(true);
+                PlayerXTurnID.setVisible(false);
+            }
+
         }
     }
 
@@ -274,6 +275,9 @@ public class GameManager {
             button.setId("");
             currentState.getField().clearBoard();
             currentPlayer = 0;
+            PlayerOTurnID.setVisible(false);
+            PlayerXTurnID.setVisible(true);
+
         }
     }
 
@@ -290,9 +294,11 @@ public class GameManager {
         errAlert.showAndWait();
     }
 
-    public void setLabels(Label winsCross, Label winsCircle) {
+    public void setLabels(Label winsCross, Label winsCircle, Label PlayerXTurnID, Label PlayerOTurnID) {
         this.winsCross = winsCross;
         this.winsCircle = winsCircle;
+        this.PlayerXTurnID = PlayerXTurnID;
+        this.PlayerOTurnID = PlayerOTurnID;
     }
 
     public void updateLabels() {

@@ -38,5 +38,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </JFXButton>
+      <Label fx:id="PlayerOTurnID" layoutX="527.0" layoutY="195.0" text="Your turn!" />
+      <Label fx:id="TurnXturnID" layoutX="527.0" layoutY="117.0" text="Your turn!" />
    </children>
 </AnchorPane>

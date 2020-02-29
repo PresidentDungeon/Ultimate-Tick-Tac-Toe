@@ -36,11 +36,13 @@ public class GeneratedWindowController implements Initializable {
     @FXML
     private AnchorPane buttonPane;
     @FXML
-    private Label movesID;
-    @FXML
     private Label winsCross;
     @FXML
     private Label winsCircle;
+    @FXML
+    private Label PlayerOTurnID;
+    @FXML
+    private Label TurnXturnID;
 
     /**
      * Initializes the controller class.
@@ -50,6 +52,7 @@ public class GeneratedWindowController implements Initializable {
         generateButtons();
         gm.highlightPlayableArea(getAllButtons());
         sendLabels();
+        PlayerOTurnID.setVisible(false);
     }
 
     /**
@@ -155,6 +158,6 @@ public class GeneratedWindowController implements Initializable {
     
     public void sendLabels()
     {
-        gm.setLabels(winsCross, winsCircle);
+        gm.setLabels(winsCross, winsCircle, TurnXturnID, PlayerOTurnID);
     }
 }
