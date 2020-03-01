@@ -6,6 +6,7 @@ import field.IField;
 import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Paint;
 //import javafx.scene.control.Alert;
 import move.IMove;
 import move.Move;
@@ -102,6 +103,7 @@ public class GameManager {
         IMove move = new Move(btn.getX(), btn.getY());
         if (verifyMoveLegality(move)) {
             btn.setText((currentPlayer == 0) ? "x" : "o");
+            btn.setTextFill((currentPlayer == 0) ? Paint.valueOf("#F44336") : Paint.valueOf("#2196F3"));
 
             updateBoard(move);
             updateMicroboard(move);
