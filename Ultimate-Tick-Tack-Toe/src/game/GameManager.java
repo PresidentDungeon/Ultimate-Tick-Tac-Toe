@@ -122,7 +122,7 @@ public class GameManager {
                 }
 
                 if (currentState.getField().checkForWinnerBoard() != null) {
-                    showWinnerAlert("Concratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
+                    showWinnerAlert("congratulations!", "The winner of the game is player: " + currentState.getField().checkForWinnerBoard());
 
                     if (currentState.getField().checkForWinnerBoard().equalsIgnoreCase("x")) {
                         winX++;
